@@ -41,3 +41,11 @@ def refresh(request,user_id):
         context = {'form': form}
 
         return render(request, 'criar.html', context=context)
+    
+def delete (request, user_id):
+
+    user = User.objects.get(pk=user_id)
+    user.delete()
+
+    return redirect(index)
+    
