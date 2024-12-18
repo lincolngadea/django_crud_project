@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UserForm
 from .models import User
 
@@ -20,16 +20,12 @@ def create(request):
         context = {
             'form': form,
         }
-        return render(request, 'user/criar.html', context= context)
+        return render(request, 'criar.html', context= context)
     else:
         form = UserForm(request.POST)
         if form.is_valid():            
-            context ={
-                'nome': form.cleaned_data['nome'],
-                'telefone': form.cleaned_data['telefone'],
-                'email': form.cleaned_data['email']
-            }
-            return render(request, 'user/index.html', context= context)
+            form.save()
+            return redirect(index)
 def change(request,user_id):
     context = {
         'id': user_id
